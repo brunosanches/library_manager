@@ -7,7 +7,7 @@ import com.ensta.librarymanager.exception.ServiceException;
 import com.ensta.librarymanager.model.Emprunt;
 import com.ensta.librarymanager.model.Membre;
 
-public interface EmpruntService {
+public interface IEmpruntService {
 	public List<Emprunt> getList() throws ServiceException;
 	public List<Emprunt> getListCurrent() throws ServiceException;
 	public List<Emprunt> getListCurrentByMembre(int idMembre) throws ServiceException;

@@ -5,7 +5,7 @@ import java.util.List;
 import com.ensta.librarymanager.exception.ServiceException;
 import com.ensta.librarymanager.model.Membre;
 
-public interface MembreService {
+public interface IMembreService {
 
 	public List<Membre> getList() throws ServiceException;
 	public List<Membre> getListMembreEmpruntPossible() throws ServiceException;

@@ -1,5 +1,7 @@
 package com.ensta.librarymanager.exception;
 
 public class ServiceException extends Exception{
-    // TODO Create class ServiceException
+    public ServiceException(String message) {
+        super(message);
+    }
 }
