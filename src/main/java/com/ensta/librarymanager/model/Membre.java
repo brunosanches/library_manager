@@ -10,6 +10,38 @@ public class Membre {
     private String telephone;
     private Abonnement abonnement;
 
+    public int getId() {
+        return id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public Abonnement getAbonnement() {
+        return abonnement;
+    }
+
+    public void setAbonnement(Abonnement abonnement) {
+        this.abonnement = abonnement;
+    }
+
     public Membre(int id, String nom, String prenom, String adresse, String email, String telephone,
                   Abonnement abonnement) {
         this.id = id;

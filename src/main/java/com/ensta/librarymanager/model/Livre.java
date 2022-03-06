@@ -23,4 +23,32 @@ public class Livre {
                 ", isbn='" + isbn + '\'' +
                 '}';
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public String getAuteur() {
+        return auteur;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public void setAuteur(String auteur) {
+        this.auteur = auteur;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 }

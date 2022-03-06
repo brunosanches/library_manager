@@ -9,9 +9,16 @@ import java.util.List;
 
 public class LivreService implements ILivreService {
     private LivreDao livreDao;
+    private static LivreService instance;
+    private LivreService() {
+        livreDao = LivreDao.getInstance();
+    }
 
-    public LivreService() {
-        livreDao = new LivreDao();
+    public static LivreService getInstance() {
+        if(instance == null) {
+            instance = new LivreService();
+        }
+        return instance;
     }
 
 
@@ -42,17 +49,32 @@ public class LivreService implements ILivreService {
 
     @Override
     public int create(String titre, String auteur, String isbn) throws ServiceException {
-        return 0;
+        try {
+            return livreDao.create(titre, auteur, isbn);
+        } catch (DaoException e) {
+            e.printStackTrace();
+            throw new ServiceException("Problème au service livre create");
+        }
     }
 
     @Override
     public void update(Livre livre) throws ServiceException {
-
+        try {
+            livreDao.update(livre);
+        } catch (DaoException e) {
+            e.printStackTrace();
+            throw new ServiceException("Problème au service livre update");
+        }
     }
 
     @Override
     public void delete(int id) throws ServiceException {
-
+        try {
+            livreDao.delete(id);
+        } catch (DaoException e) {
+            e.printStackTrace();
+            throw new ServiceException("Problème au service livre delete");
+        }
     }
 
     @Override
