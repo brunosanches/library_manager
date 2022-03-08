@@ -1,86 +1,13 @@
 package com.ensta.librarymanager.service;
 
-import com.ensta.librarymanager.dao.EmpruntDao;
-import com.ensta.librarymanager.exception.DaoException;
 import com.ensta.librarymanager.exception.ServiceException;
 import com.ensta.librarymanager.model.Emprunt;
-import com.ensta.librarymanager.model.Membre;
 import junit.framework.TestCase;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 public class EmpruntServiceTest extends TestCase {
-
-    public void testGetList() {
-        try {
-            EmpruntService es = EmpruntService.getInstance();
-            List<Emprunt> le = es.getList();
-            System.out.println(le);
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void testGetListCurrent() {
-        try {
-            EmpruntService es = EmpruntService.getInstance();
-            List<Emprunt> le = es.getListCurrent();
-            System.out.println(le);
-            assertFalse(le.stream().anyMatch(item -> item.getDateRetour() != null));
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void testGetListCurrentByMembre() {
-        try {
-            EmpruntService es = EmpruntService.getInstance();
-            List<Emprunt> le = es.getListCurrentByMembre(5);
-            System.out.println(le);
-            assertTrue(le.stream().allMatch(item -> item.getIdMembre() == 5));
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void testGetListCurrentByLivre() {
-        try {
-            EmpruntService es = EmpruntService.getInstance();
-            List<Emprunt> le = es.getListCurrentByLivre(3);
-            System.out.println(le);
-            assertTrue(le.stream().allMatch(item -> item.getIdLivre() == 3));
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void testGetById() {
-        try {
-            EmpruntService es = EmpruntService.getInstance();
-            Emprunt e = es.getById(3);
-            System.out.println(e);
-            assertTrue(e.getId() == 3);
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void testCreate() {
-        EmpruntService es = EmpruntService.getInstance();
-        try {
-            es.create(5, 3, LocalDate.of(2022, 03, 07));
-            List<Emprunt> le = es.getListCurrentByLivre(3);
-            System.out.println(le);
-            assertTrue(le.stream().anyMatch(
-                    item -> item.getIdLivre() == 3 &&
-                    item.getIdMembre() == 5 &&
-                    item.getDateEmprunt().isEqual(LocalDate.of(2022, 03, 07))));
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void testReturnBook() {
         EmpruntService es = EmpruntService.getInstance();
@@ -103,15 +30,6 @@ public class EmpruntServiceTest extends TestCase {
             es.returnBook(e.getId());
             e = es.getById(e.getId());
             assertEquals(e.getDateRetour(), LocalDate.now());
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void testCount() {
-        try {
-            EmpruntService es = EmpruntService.getInstance();
-            assertEquals(es.getList().size(), es.count());
         } catch (ServiceException e) {
             e.printStackTrace();
         }

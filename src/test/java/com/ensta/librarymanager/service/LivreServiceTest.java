@@ -5,98 +5,41 @@ import com.ensta.librarymanager.model.Livre;
 import junit.framework.TestCase;
 import org.junit.Test;
 
-public class LivreServiceTest extends TestCase {
+import java.util.List;
 
+public class LivreServiceTest extends TestCase {
     @Test
-    public void testGetList() {
+    public void testGetListDispo() {
         LivreService ls = LivreService.getInstance();
         try {
-            System.out.println(ls.getList());
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-    }
-    @Test
-    public void testGetById() {
-        LivreService ls = LivreService.getInstance();
-        try {
-            System.out.println(ls.getById(1));
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-    }
-    @Test
-    public void testCount() {
-        LivreService ls = LivreService.getInstance();
-        try {
-            System.out.println(ls.count());
+            List<Livre> ll = ls.getListDispo();
+            System.out.println(ll);
         } catch (ServiceException e) {
             e.printStackTrace();
         }
     }
     @Test
     public void testCreate() {
-        String titre = "La fraternité de l'anneau";
-        String auteur = "J. R. R. Tolkien";
-        String isbn = "9780007136599";
-
+        LivreService ls = LivreService.getInstance();
         try {
-            LivreService ls = LivreService.getInstance();
-            int id = ls.create(titre, auteur, isbn);
-            Livre l = ls.getById(id);
-            System.out.println(l);
-            assertEquals(titre, l.getTitre());
-            assertEquals(auteur, l.getAuteur());
-            assertEquals(isbn, l.getIsbn());
+          ls.create("", "", "xxxxxxx");
+          assertTrue(false);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            assertEquals(e.getLocalizedMessage(), "Le titre du livre est vide");
         }
     }
     @Test
     public void testUpdate() {
-        String titre = "La fraternité de l'anneau";
-        String auteur = "J. R. R. Tolkien";
-        String isbn = "9780007136599";
-
+        LivreService ls = LivreService.getInstance();
         try {
-            LivreService ls = LivreService.getInstance();
-            int id = ls.create(titre, auteur, isbn);
+            int id = ls.create("History", "Frank", "sssssssss");
+            assertTrue(id != -1);
             Livre l = ls.getById(id);
-            System.out.println(l);
-
-            titre = "Le Silmarillion";
-            isbn = "9780261103665";
-            l.setTitre(titre);
-            l.setIsbn(isbn);
-
+            l.setTitre("");
             ls.update(l);
-            System.out.println(l);
-
-            assertEquals(titre, l.getTitre());
-            assertEquals(auteur, l.getAuteur());
-            assertEquals(isbn, l.getIsbn());
+            assertTrue(false); // If it comes here it is wrong, need to throw exception
         } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-    }
-    @Test
-    public void testDelete() {
-        String titre = "La fraternité de l'anneau";
-        String auteur = "J. R. R. Tolkien";
-        String isbn = "9780007136599";
-
-        try {
-            LivreService ls = LivreService.getInstance();
-            int id = ls.create(titre, auteur, isbn);
-            Livre l = ls.getById(id);
-            System.out.println(l);
-
-            ls.delete(id);
-            l = ls.getById(id);
-
-            assertNull(l);
-        } catch (ServiceException e) {
-            e.printStackTrace();
+            assertEquals(e.getLocalizedMessage(), "Le titre du livre est vide");
         }
     }
 }

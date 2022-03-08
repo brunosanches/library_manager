@@ -28,7 +28,7 @@ public class MembreDao implements IMembreDao {
 
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery("SELECT id, nom, prenom, adresse, email, telephone, abonnement " +
-                    "FROM membre" +
+                    "FROM membre " +
                     "ORDER BY nom, prenom");
 
             while(res.next()) {
