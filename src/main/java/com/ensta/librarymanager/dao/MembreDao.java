@@ -2,7 +2,6 @@ package com.ensta.librarymanager.dao;
 
 import com.ensta.librarymanager.exception.DaoException;
 import com.ensta.librarymanager.model.Abonnement;
-import com.ensta.librarymanager.model.Livre;
 import com.ensta.librarymanager.model.Membre;
 import com.ensta.librarymanager.persistence.ConnectionManager;
 
@@ -22,9 +21,8 @@ public class MembreDao implements IMembreDao {
     }
     @Override
     public List<Membre> getList() throws DaoException {
-        List<Membre> membresList = new ArrayList<Membre>();
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        List<Membre> membresList = new ArrayList<>();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery("SELECT id, nom, prenom, adresse, email, telephone, abonnement " +
@@ -48,8 +46,7 @@ public class MembreDao implements IMembreDao {
     @Override
     public Membre getById(int id) throws DaoException {
         Membre membre = null;
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             PreparedStatement pstm = conn.prepareStatement("SELECT id, nom, prenom, adresse, email, telephone, abonnement " +
                                                                "FROM membre WHERE id = ?");
@@ -74,8 +71,7 @@ public class MembreDao implements IMembreDao {
     @Override
     public int create(String nom, String prenom, String adresse, String email, String telephone) throws DaoException {
         int id = -1;
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             PreparedStatement pstm = conn.prepareStatement("INSERT INTO membre(nom, prenom, adresse, email, telephone, abonnement) " +
                                                                "VALUES (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
@@ -102,8 +98,7 @@ public class MembreDao implements IMembreDao {
 
     @Override
     public void update(Membre membre) throws DaoException {
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             PreparedStatement pstm = conn.prepareStatement("UPDATE membre SET nom = ?, prenom = ?, adresse = ?," +
                                                                "email = ?, telephone = ?, abonnement = ?" +
@@ -125,8 +120,7 @@ public class MembreDao implements IMembreDao {
 
     @Override
     public void delete(int id) throws DaoException {
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             PreparedStatement pstm = conn.prepareStatement("DELETE FROM membre WHERE id = ?");
             pstm.setInt(1, id);
@@ -140,8 +134,7 @@ public class MembreDao implements IMembreDao {
 
     @Override
     public int count() throws DaoException {
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery("SELECT Count(*) FROM membre");

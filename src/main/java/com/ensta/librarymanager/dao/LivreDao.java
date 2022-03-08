@@ -21,9 +21,8 @@ public class LivreDao implements ILivreDao {
 
     @Override
     public List<Livre> getList() throws DaoException {
-        List<Livre> livreList = new ArrayList<Livre>();
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        List<Livre> livreList = new ArrayList<>();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery("SELECT id, titre, auteur, isbn FROM livre");
@@ -44,8 +43,7 @@ public class LivreDao implements ILivreDao {
     @Override
     public Livre getById(int id) throws DaoException {
         Livre livre = null;
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             PreparedStatement pstm = conn.prepareStatement("SELECT id, titre, auteur, isbn FROM livre WHERE id = ?");
 
@@ -68,8 +66,7 @@ public class LivreDao implements ILivreDao {
     @Override
     public int create(String titre, String auteur, String isbn) throws DaoException {
         int id = -1;
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             PreparedStatement pstm = conn.prepareStatement("INSERT INTO livre(titre, auteur, isbn) VALUES (?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
@@ -92,8 +89,7 @@ public class LivreDao implements ILivreDao {
 
     @Override
     public void update(Livre livre) throws DaoException {
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             PreparedStatement pstm = conn.prepareStatement("UPDATE livre SET titre = ?, auteur = ?, isbn = ?" +
                                                                 "WHERE id = ?");
@@ -112,8 +108,7 @@ public class LivreDao implements ILivreDao {
 
     @Override
     public void delete(int id) throws DaoException {
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             PreparedStatement pstm = conn.prepareStatement("DELETE FROM livre WHERE id = ?");
             pstm.setInt(1, id);
@@ -127,8 +122,7 @@ public class LivreDao implements ILivreDao {
 
     @Override
     public int count() throws DaoException {
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery("SELECT Count(*) FROM livre");

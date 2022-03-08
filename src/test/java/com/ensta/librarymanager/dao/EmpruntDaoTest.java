@@ -6,6 +6,7 @@ import junit.framework.TestCase;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class EmpruntDaoTest extends TestCase {
 
@@ -66,7 +67,7 @@ public class EmpruntDaoTest extends TestCase {
     public void testCreate() {
         EmpruntDao ed = EmpruntDao.getInstance();
         try {
-            ed.create(5, 3, LocalDate.of(2022, 03, 07));
+            ed.create(5, 3, LocalDate.of(2022, 3, 7));
             List<Emprunt> le = ed.getListCurrentByLivre(3);
             System.out.println(le);
         } catch (DaoException e) {
@@ -77,12 +78,15 @@ public class EmpruntDaoTest extends TestCase {
     public void testUpdate() {
         EmpruntDao ed = EmpruntDao.getInstance();
         try {
-            ed.create(5, 3, LocalDate.of(2022, 03, 8));
+            ed.create(5, 3, LocalDate.of(2022, 3, 8));
             List<Emprunt> le = ed.getListCurrentByMembre(5);
-            Emprunt e = le.stream().filter(
+            Optional<Emprunt> oe = le.stream().filter(
                     item -> item.getIdLivre() == 3 &&
                             item.getDateEmprunt().isEqual(LocalDate.of(2022, 3, 8))
-                    ).findFirst().orElse(null);
+                    ).findFirst();
+
+            assertTrue(oe.isPresent());
+            Emprunt e = oe.get();
 
             int id = e.getId();
             e.setDateRetour(LocalDate.of(2022, 4, 8));

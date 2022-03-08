@@ -4,7 +4,6 @@ import com.ensta.librarymanager.exception.DaoException;
 import com.ensta.librarymanager.model.Emprunt;
 import com.ensta.librarymanager.persistence.ConnectionManager;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.List;
 
 public class EmpruntDao implements IEmpruntDao {
     private static EmpruntDao instance;
-    private EmpruntDao() {};
+    private EmpruntDao() {}
 
     public static EmpruntDao getInstance() {
         if (instance == null) {
@@ -24,8 +23,7 @@ public class EmpruntDao implements IEmpruntDao {
     @Override
     public List<Emprunt> getList() throws DaoException {
         List<Emprunt> empruntList = new ArrayList<>();
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(
@@ -56,8 +54,7 @@ public class EmpruntDao implements IEmpruntDao {
     @Override
     public List<Emprunt> getListCurrent() throws DaoException {
         List<Emprunt> empruntList = new ArrayList<>();
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(
@@ -88,8 +85,7 @@ public class EmpruntDao implements IEmpruntDao {
     @Override
     public List<Emprunt> getListCurrentByMembre(int idMembre) throws DaoException {
         List<Emprunt> empruntList = new ArrayList<>();
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             PreparedStatement pstm = conn.prepareStatement(
                     "SELECT e.id AS id, idMembre, nom, prenom, adresse, email, " +
@@ -121,8 +117,7 @@ public class EmpruntDao implements IEmpruntDao {
     @Override
     public List<Emprunt> getListCurrentByLivre(int idLivre) throws DaoException {
         List<Emprunt> empruntList = new ArrayList<>();
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             PreparedStatement pstm = conn.prepareStatement(
                     "SELECT e.id AS id, idMembre, nom, prenom, adresse, email, " +
@@ -155,8 +150,7 @@ public class EmpruntDao implements IEmpruntDao {
     @Override
     public Emprunt getById(int id) throws DaoException {
         Emprunt emprunt = null;
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             PreparedStatement pstm = conn.prepareStatement(
                     "SELECT e.id AS id, idMembre, nom, prenom, adresse, email, " +
@@ -188,8 +182,7 @@ public class EmpruntDao implements IEmpruntDao {
 
     @Override
     public void create(int idMembre, int idLivre, LocalDate dateEmprunt) throws DaoException {
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()) {
 
             PreparedStatement pstm = conn.prepareStatement(
                     "INSERT INTO emprunt(idMembre, idLivre, dateEmprunt, dateRetour)" +
@@ -210,8 +203,7 @@ public class EmpruntDao implements IEmpruntDao {
 
     @Override
     public void update(Emprunt emprunt) throws DaoException {
-        try {
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             PreparedStatement pstm = conn.prepareStatement(
                     "UPDATE emprunt " +
@@ -234,8 +226,7 @@ public class EmpruntDao implements IEmpruntDao {
     @Override
     public int count() throws DaoException {
         int count = 0;
-        try{
-            Connection conn = ConnectionManager.getConnection();
+        try (Connection conn = ConnectionManager.getConnection()){
 
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT COUNT(id) AS count FROM emprunt");

@@ -1,5 +1,9 @@
 package com.ensta.librarymanager.model;
 
+import com.ensta.librarymanager.exception.ServiceException;
+import com.ensta.librarymanager.service.LivreService;
+import com.ensta.librarymanager.service.MembreService;
+
 import java.time.LocalDate;
 
 public class Emprunt {
@@ -41,6 +45,50 @@ public class Emprunt {
     public void setDateRetour(LocalDate dateRetour) {
         this.dateRetour = dateRetour;
     }
+
+    public String getMembreNom() {
+        MembreService membreService = MembreService.getInstance();
+        try {
+            return membreService.getById(idMembre).getNom();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public String getMembrePrenom() {
+        MembreService membreService = MembreService.getInstance();
+
+        try {
+            return membreService.getById(idMembre).getPrenom();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public String getLivreTitre() {
+        LivreService livreService = LivreService.getInstance();
+
+        try {
+            return livreService.getById(idLivre).getTitre();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public String getAuteurNom() {
+        LivreService livreService = LivreService.getInstance();
+
+        try {
+            return livreService.getById(idLivre).getAuteur();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 
     @Override
     public String toString() {

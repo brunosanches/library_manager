@@ -1,3 +1,4 @@
+<%@ page import="com.ensta.librarymanager.model.Emprunt" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
 <html>
@@ -23,7 +24,7 @@
         <div class="col l4 s6">
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>12</h3> <!-- TODO : afficher le nombre de membres à la place de 12 -->
+              <h3>${membreCount}</h3>
               <p>Membres</p>
             </div>
             <div class="icon">
@@ -35,7 +36,7 @@
         <div class="col l4 s6">
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>27</h3> <!-- TODO : afficher le nombre de livres à la place de 27 -->
+              <h3>${livreCount}</h3>
               <p>Livres</p>
             </div>
             <div class="icon">
@@ -47,7 +48,7 @@
         <div class="col l4 s6">
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>1515</h3> <!-- TODO : afficher le nombre d'emprunts à la place de 1515 -->
+              <h3>${empruntCount}</h3>
               <p>Emprunts</p>
             </div>
             <div class="icon">
@@ -69,17 +70,14 @@
                     </tr>
                 </thead>
                 <tbody id="results">
-                
-                    <tr>
-                        <td>Titre du livre, <em>de Nom de l'auteur</em></td>
-                        <td>Prénom et nom du membre emprunteur</td>
-                        <td>Date de l'emprunt</td>
-                        <td>
-                            <a href="emprunt_return?id=idDeLEmprunt"><ion-icon class="table-item" name="log-in"></a>
-                        </td>
-                    </tr>
-                    
-                     <!-- TODO : parcourir la liste des emprunts en cours et les afficher selon la structure d'exemple ci-dessus -->
+                    <c:forEach items="${empruntList}" var="emprunt">
+                        <tr>
+                            <td>${emprunt.livreTitre}, ${emprunt.auteurNom}</td>
+                            <td>${emprunt.membrePrenom} ${emprunt.membreNom}</td>
+                            <td>${emprunt.dateEmprunt}</td>
+                            <td><a href="emprunt_return?id=${emprunt.id}"><ion-icon class="table-item" name="log-in"/></a></td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
           </div>
