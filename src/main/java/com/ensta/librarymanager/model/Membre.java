@@ -38,6 +38,10 @@ public class Membre {
         return abonnement;
     }
 
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
     public void setAbonnement(Abonnement abonnement) {
         this.abonnement = abonnement;
     }

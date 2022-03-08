@@ -37,7 +37,7 @@ public class MembreServiceTest extends TestCase {
             int id = ms.create(nom, prenom, adresse, email, telephone);
             Membre m = ms.getById(id);
             System.out.println(m);
-            assertEquals(nom, m.getNom());
+            assertEquals(nom.toUpperCase(), m.getNom());
             assertEquals(prenom, m.getPrenom());
             assertEquals(adresse, m.getAdresse());
             assertEquals(email, m.getEmail());
@@ -65,7 +65,7 @@ public class MembreServiceTest extends TestCase {
             m = ms.getById(id);
             System.out.println(m);
 
-            assertEquals(nom, m.getNom());
+            assertEquals(nom.toUpperCase(), m.getNom());
             assertEquals(prenom, m.getPrenom());
             assertEquals(adresse, m.getAdresse());
             assertEquals(email, m.getEmail());
