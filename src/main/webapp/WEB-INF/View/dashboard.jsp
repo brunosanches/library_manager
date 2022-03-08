@@ -75,7 +75,7 @@
                             <td>${emprunt.livreTitre}, ${emprunt.auteurNom}</td>
                             <td>${emprunt.membrePrenom} ${emprunt.membreNom}</td>
                             <td>${emprunt.dateEmprunt}</td>
-                            <td><a href="emprunt_return?id=${emprunt.id}"><ion-icon class="table-item" name="log-in"/></a></td>
+                            <td><a href="emprunt_return?id=${emprunt.id}"><ion-icon class="table-item" name="log-in"></ion-icon></a></td>
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -86,5 +86,7 @@
     </section>
   </main>
   <jsp:include page='footer.jsp'></jsp:include>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
