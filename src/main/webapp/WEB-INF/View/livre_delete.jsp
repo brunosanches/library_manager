@@ -21,16 +21,16 @@
       </div>
       <div class="row">
       <div class="container">
-      <h5>Suppression du livre n°42</h5> <!-- TODO : afficher l'id du livre au lieu de 42 -->
+      <h5>Suppression du livre n°${livre.id}</h5>
         <div class="row">
-          <p>Êtes-vous sûr de vouloir supprimer le livre TitreDuLivre de NomDeLAuteur (code isbnDuLivre) ?</p> <!-- TODO : compléter les trois informations ci-contre -->
-	      <form action="/LibraryManager/livre_delete" method="post" class="col s12">
-            <input type="hidden" value="idDuLivre" name="id"> <!-- TODO : remplacer idDuLivre par l'id du livre -->
+          <p>Êtes-vous sûr de vouloir supprimer le livre ${livre.titre} de ${livre.auteur} (code ${livre.isbn}) ?</p>
+	      <form action="/TP3Ensta/livre_delete" method="post" class="col s12">
+            <input type="hidden" value=${livre.id} name="id">
 	        <div class="row center">
 	          <button class="btn waves-effect waves-light red" type="submit">Supprimer
 	            <i class="material-icons right">delete</i>
 	          </button>
-	          <a class="btn waves-effect waves-light orange" href="/LibraryManager/livre_details?id=idDuLivre">Annuler</a> <!-- TODO : remplacer idDuLivre par l'id du livre -->
+	          <a class="btn waves-effect waves-light orange" href="/TP3Ensta/livre_details?id=${livre.id}">Annuler</a>
 	        </div>
 	      </form>
 	    </div>	    
@@ -39,5 +39,7 @@
     </section>
   </main>
   <jsp:include page='footer.jsp'></jsp:include>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
