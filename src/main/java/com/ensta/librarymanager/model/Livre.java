@@ -51,4 +51,8 @@ public class Livre {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

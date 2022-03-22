@@ -3,6 +3,7 @@ package com.ensta.librarymanager.service;
 import com.ensta.librarymanager.exception.ServiceException;
 import com.ensta.librarymanager.model.Abonnement;
 import com.ensta.librarymanager.model.Emprunt;
+import com.ensta.librarymanager.model.Livre;
 import com.ensta.librarymanager.model.Membre;
 import junit.framework.TestCase;
 
@@ -12,10 +13,10 @@ import java.util.List;
 public class EmpruntServiceTest extends TestCase {
 
     public void testReturnBook() {
-        EmpruntService es = EmpruntService.getInstance();
+        EmpruntService empruntService = EmpruntService.getInstance();
         try {
-            es.create(5, 3, LocalDate.of(2021, 03, 07));
-            List<Emprunt> le = es.getListCurrentByLivre(3);
+            empruntService.create(5, 3, LocalDate.of(2021, 03, 07));
+            List<Emprunt> le = empruntService.getListCurrentByLivre(3);
             System.out.println(le);
             assertTrue(le.stream().anyMatch(
                     item -> item.getIdLivre() == 3 &&
@@ -29,8 +30,8 @@ public class EmpruntServiceTest extends TestCase {
                     .findFirst().orElse(null);
 
             assertNotNull(e);
-            es.returnBook(e.getId());
-            e = es.getById(e.getId());
+            empruntService.returnBook(e.getId());
+            e = empruntService.getById(e.getId());
             assertEquals(e.getDateRetour(), LocalDate.now());
         } catch (ServiceException e) {
             e.printStackTrace();
@@ -38,10 +39,10 @@ public class EmpruntServiceTest extends TestCase {
     }
 
     public void testIsLivreDispo() {
-        EmpruntService es = EmpruntService.getInstance();
+        EmpruntService empruntService = EmpruntService.getInstance();
         try {
-            es.create(5, 3, LocalDate.of(2021, 03, 07));
-            List<Emprunt> le = es.getListCurrentByLivre(3);
+            empruntService.create(5, 3, LocalDate.of(2021, 03, 07));
+            List<Emprunt> le = empruntService.getListCurrentByLivre(3);
             System.out.println(le);
             assertTrue(le.stream().anyMatch(
                     item -> item.getIdLivre() == 3 &&
@@ -54,29 +55,32 @@ public class EmpruntServiceTest extends TestCase {
                                     item.getDateEmprunt().isEqual(LocalDate.of(2021, 03, 07)))
                     .findFirst().orElse(null);
 
-            assertFalse(es.isLivreDispo(e.getIdLivre()));
-            es.returnBook(e.getId());
-            assertTrue(es.isLivreDispo(e.getId()));
+            assertFalse(empruntService.isLivreDispo(e.getIdLivre()));
+            empruntService.returnBook(e.getId());
+            assertTrue(empruntService.isLivreDispo(e.getId()));
         } catch (ServiceException e) {
             e.printStackTrace();
         }
     }
 
     public void testIsEmpruntPossible() {
-        EmpruntService es = EmpruntService.getInstance();
-        MembreService ms = MembreService.getInstance();
-        LivreService ls = LivreService.getInstance();
+        EmpruntService empruntService = EmpruntService.getInstance();
+        MembreService membreService = MembreService.getInstance();
+        LivreService livreService = LivreService.getInstance();
         try {
-            Membre membre = ms.create(new Membre(-1, "Macedo", "Bruno",
+            Membre membre = membreService.create(new Membre(-1, "Macedo", "Bruno",
                     "1 xxxxxxx", "xxxx@xxxx.com",
                     "+77 77 77 77 77 77", Abonnement.BASIC));
 
-            int idLivre1 = ls.create("History", "Jhon", "xxxxxxxxxx");
-            int idLivre2 = ls.create("Geography", "Jhon", "xxxxxxxxxx");
-            es.create(membre.getId(), idLivre1, LocalDate.now());
-            assertTrue(es.isEmpruntPossible(ms.getById(membre.getId())));
-            es.create(membre.getId(), idLivre2, LocalDate.now());
-            assertFalse(es.isEmpruntPossible(ms.getById(membre.getId())));
+            Livre livre1 = new Livre(-1, "History", "Jhon", "xxxxxxxxxx");
+            Livre livre2 = new Livre(-1, "Geography", "Jhon", "xxxxxxxxxx");
+            livre1 = livreService.create(livre1);
+            livre2 = livreService.create(livre2);
+
+            empruntService.create(membre.getId(), livre1.getId(), LocalDate.now());
+            assertTrue(empruntService.isEmpruntPossible(membreService.getById(membre.getId())));
+            empruntService.create(membre.getId(), livre2.getId(), LocalDate.now());
+            assertFalse(empruntService.isEmpruntPossible(membreService.getById(membre.getId())));
         } catch (ServiceException e) {
             e.printStackTrace();
         }

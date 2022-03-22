@@ -64,11 +64,11 @@ public class LivreService implements ILivreService {
     }
 
     @Override
-    public int create(String titre, String auteur, String isbn) throws ServiceException {
+    public Livre create(Livre livre) throws ServiceException {
         try {
-            if (titre == null || titre.equals(""))
+            if (livre.getTitre() == null || livre.getTitre().equals(""))
                 throw new ServiceException("Le titre du livre est vide");
-            return livreDao.create(titre, auteur, isbn);
+            return livreDao.create(livre);
         } catch (DaoException e) {
             e.printStackTrace();
             throw new ServiceException("Problème au service livre create");

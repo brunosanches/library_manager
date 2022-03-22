@@ -64,28 +64,29 @@ public class LivreDao implements ILivreDao {
     }
 
     @Override
-    public int create(String titre, String auteur, String isbn) throws DaoException {
-        int id = -1;
+    public Livre create(Livre livre) throws DaoException {
         try (Connection conn = ConnectionManager.getConnection()){
 
             PreparedStatement pstm = conn.prepareStatement("INSERT INTO livre(titre, auteur, isbn) VALUES (?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
-            pstm.setString(1, titre);
-            pstm.setString(2, auteur);
-            pstm.setString(3, isbn);
+            pstm.setString(1, livre.getTitre());
+            pstm.setString(2, livre.getAuteur());
+            pstm.setString(3, livre.getIsbn());
 
             pstm.executeUpdate();
             ResultSet resultSet = pstm.getGeneratedKeys();
 
             if (resultSet.next()) {
-                id = resultSet.getInt(1);
+                livre.setId(resultSet.getInt(1));
             }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DaoException("SQL Expection en create livre: " + e.getLocalizedMessage());
         }
-        return id;
+        return livre;
     }
+
+
 
     @Override
     public void update(Livre livre) throws DaoException {

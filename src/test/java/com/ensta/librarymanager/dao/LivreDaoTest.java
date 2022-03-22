@@ -31,13 +31,14 @@ public class LivreDaoTest extends TestCase {
         String auteur = "J. R. R. Tolkien";
         String isbn = "9780007136599";
 
+        Livre livre = new Livre(-1, titre, auteur, isbn);
         try {
-            int id = livreDao.create(titre, auteur, isbn);
-            Livre l = livreDao.getById(id);
-            System.out.println(l);
-            assertEquals(titre, l.getTitre());
-            assertEquals(auteur, l.getAuteur());
-            assertEquals(isbn, l.getIsbn());
+            livre = livreDao.create(livre);
+            livre = livreDao.getById(livre.getId());
+            System.out.println(livre);
+            assertEquals(titre, livre.getTitre());
+            assertEquals(auteur, livre.getAuteur());
+            assertEquals(isbn, livre.getIsbn());
         } catch (DaoException e) {
             e.printStackTrace();
         }
@@ -48,23 +49,23 @@ public class LivreDaoTest extends TestCase {
         String titre = "La fraternité de l'anneau";
         String auteur = "J. R. R. Tolkien";
         String isbn = "9780007136599";
-
+        Livre livre = new Livre(-1, titre, auteur, isbn);
         try {
-            int id = livreDao.create(titre, auteur, isbn);
-            Livre l = livreDao.getById(id);
-            System.out.println(l);
+            livre = livreDao.create(livre);
+            livre = livreDao.getById(livre.getId());
+            System.out.println(livre);
 
             titre = "Le Silmarillion";
             isbn = "9780261103665";
-            l.setTitre(titre);
-            l.setIsbn(isbn);
+            livre.setTitre(titre);
+            livre.setIsbn(isbn);
 
-            livreDao.update(l);
-            System.out.println(l);
+            livreDao.update(livre);
+            System.out.println(livre);
 
-            assertEquals(titre, l.getTitre());
-            assertEquals(auteur, l.getAuteur());
-            assertEquals(isbn, l.getIsbn());
+            assertEquals(titre, livre.getTitre());
+            assertEquals(auteur, livre.getAuteur());
+            assertEquals(isbn, livre.getIsbn());
         } catch (DaoException e) {
             e.printStackTrace();
         }
@@ -75,16 +76,15 @@ public class LivreDaoTest extends TestCase {
         String titre = "La fraternité de l'anneau";
         String auteur = "J. R. R. Tolkien";
         String isbn = "9780007136599";
-
+        Livre livre = new Livre(-1, titre, auteur, isbn);
         try {
-            int id = livreDao.create(titre, auteur, isbn);
-            Livre l = livreDao.getById(id);
-            System.out.println(l);
+            livre = livreDao.create(livre);
+            System.out.println(livre);
 
-            livreDao.delete(id);
-            l = livreDao.getById(id);
+            livreDao.delete(livre.getId());
+            livre = livreDao.getById(livre.getId());
 
-            assertNull(l);
+            assertNull(livre);
         } catch (DaoException e) {
             e.printStackTrace();
         }
