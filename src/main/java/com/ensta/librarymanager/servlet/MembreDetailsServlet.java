@@ -49,7 +49,7 @@ public class MembreDetailsServlet extends HttpServlet {
         Membre membre = null;
 
         try {
-            MembreService membreService = MembreService.getInstance();
+            membreService = MembreService.getInstance();
             membre = membreService.getById(id);
 
             membre.setNom(request.getParameter("nom"));
