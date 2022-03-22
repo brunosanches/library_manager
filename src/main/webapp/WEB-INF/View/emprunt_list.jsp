@@ -32,13 +32,14 @@
                     </tr>
                 </thead>
                 <tbody id="results">
+                    <jsp:useBean id="empruntList" scope="request" type="java.util.List"/>
                     <c:forEach items="${empruntList}" var="emprunt">
                         <tr>
                             <td>${emprunt.livre.titre}, <em>de ${emprunt.livre.auteur}</em></td>
-                            <td>${emprunt.membre.prenom} ${emprunt.membre.prenom}</td>
+                            <td>${emprunt.membre.prenom} ${emprunt.membre.nom}</td>
                             <td>${emprunt.dateEmprunt}</td>
                             <c:choose>
-                                <c:when test="${not empty dateRetour}">
+                                <c:when test="${not empty emprunt.dateRetour}">
                                     <td>${emprunt.dateRetour}</td>
                                 </c:when>
                                 <c:otherwise>

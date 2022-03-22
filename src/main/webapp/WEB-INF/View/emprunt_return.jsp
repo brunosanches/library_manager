@@ -23,14 +23,16 @@
       <div class="container">
         <h5>Sélectionnez le livre à retourner</h5>
         <div class="row">
-	      <form action="/LibraryManager/emprunt_return" method="post" class="col s12">
+	      <form action="/TP3Ensta/emprunt_return" method="post" class="col s12">
 	        <div class="row">
 	          <div class="input-field col s12">
 	            <select id="id" name="id" class="browser-default">
-	              <option value="" disabled selected>---</option>
-                  <!-- TODO : parcourir la liste des emprunts non rendus et afficher autant d'options que nécessaire, sur la base de l'exemple ci-dessous -->
-                  <!-- TODO : si l'attribut id existe, l'option correspondante devra être sélectionnée par défaut (ajouter l'attribut selected dans la balise <option>) -->
-                  <option value="idDeLEmprunt">"Titre du livre", emprunté par Prénom et nom du membre emprunteur</option>
+	              <c:if test="${empty param.id}">
+                      <option value="" disabled selected>---</option>
+                  </c:if>
+                    <c:forEach items="${empruntList}" var="emprunt">
+                        <option value="${emprunt.id}" ${not empty param.id && param.id == emprunt.id ? 'selected="selected"' : ''}>${emprunt.livre.titre}, emprunté par ${emprunt.membre.prenom} ${emprunt.membre.nom}</option>
+                    </c:forEach>
 	            </select>
 	          </div>
 	        </div>
@@ -51,5 +53,7 @@
 	  var instances = M.FormSelect.init(elems, {});
 	});
   </script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
