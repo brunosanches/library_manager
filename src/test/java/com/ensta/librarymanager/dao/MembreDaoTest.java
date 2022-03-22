@@ -33,16 +33,18 @@ public class MembreDaoTest extends TestCase {
         String adresse = "1491 Mill Run Rd, Mill Run, PA 15464";
         String email = "lloyd.wright@gmail.com";
         String telephone = "+1 (444) 444-4444";
+        Membre membre = new Membre(-1, nom, prenom,
+                adresse, email,
+                telephone, Abonnement.BASIC);
 
         try {
-            int id = membreDao.create(nom, prenom, adresse, email, telephone);
-            Membre m = membreDao.getById(id);
-            System.out.println(m);
-            assertEquals(nom, m.getNom());
-            assertEquals(prenom, m.getPrenom());
-            assertEquals(adresse, m.getAdresse());
-            assertEquals(email, m.getEmail());
-            assertEquals(telephone, m.getTelephone());
+            membre = membreDao.create(membre);
+            System.out.println(membre);
+            assertEquals(nom, membre.getNom());
+            assertEquals(prenom, membre.getPrenom());
+            assertEquals(adresse, membre.getAdresse());
+            assertEquals(email, membre.getEmail());
+            assertEquals(telephone, membre.getTelephone());
         } catch (DaoException e) {
             e.printStackTrace();
         }
@@ -55,23 +57,25 @@ public class MembreDaoTest extends TestCase {
         String adresse = "1491 Mill Run Rd, Mill Run, PA 15464";
         String email = "lloyd.wright@gmail.com";
         String telephone = "+1 (444) 444-4444";
+        Membre membre = new Membre(-1, nom, prenom,
+                adresse, email,
+                telephone, Abonnement.BASIC);
 
         try {
-            int id = membreDao.create(nom, prenom, adresse, email, telephone);
-            Membre m = membreDao.getById(id);
-            System.out.println(m);
+            membre = membreDao.create(membre);
+            System.out.println(membre);
 
-            m.setAbonnement(Abonnement.VIP);
-            membreDao.update(m);
-            m = membreDao.getById(id);
-            System.out.println(m);
+            membre.setAbonnement(Abonnement.VIP);
+            membreDao.update(membre);
+            membre = membreDao.getById(membre.getId());
+            System.out.println(membre);
 
-            assertEquals(nom, m.getNom());
-            assertEquals(prenom, m.getPrenom());
-            assertEquals(adresse, m.getAdresse());
-            assertEquals(email, m.getEmail());
-            assertEquals(telephone, m.getTelephone());
-            assertEquals(Abonnement.VIP, m.getAbonnement());
+            assertEquals(nom, membre.getNom());
+            assertEquals(prenom, membre.getPrenom());
+            assertEquals(adresse, membre.getAdresse());
+            assertEquals(email, membre.getEmail());
+            assertEquals(telephone, membre.getTelephone());
+            assertEquals(Abonnement.VIP, membre.getAbonnement());
         } catch (DaoException e) {
             e.printStackTrace();
         }
@@ -79,20 +83,17 @@ public class MembreDaoTest extends TestCase {
     @Test
     public void testDelete() {
         MembreDao membreDao = MembreDao.getInstance();
-        String nom = "Lloyd Wright";
-        String prenom = "Frank";
-        String adresse = "1491 Mill Run Rd, Mill Run, PA 15464";
-        String email = "lloyd.wright@gmail.com";
-        String telephone = "+1 (444) 444-4444";
+        Membre membre = new Membre(-1, "Lloyd Wright", "Frank",
+                "1491 Mill Run Rd, Mill Run, PA 15464", "lloyd.wright@gmail.com",
+                "+1 (444) 444-4444", Abonnement.BASIC);
 
         try {
-            int id = membreDao.create(nom, prenom, adresse, email, telephone);
-            Membre m = membreDao.getById(id);
-            System.out.println(m);
+            membre = membreDao.create(membre);
+            System.out.println(membre);
 
-            membreDao.delete(id);
-            m = membreDao.getById(id);
-            assertNull(m);
+            membreDao.delete(membre.getId());
+            membre = membreDao.getById(membre.getId());
+            assertNull(membre);
         } catch (DaoException e) {
             e.printStackTrace();
         }

@@ -46,11 +46,12 @@ public class MembreService implements IMembreService{
     }
 
     @Override
-    public int create(String nom, String prenom, String adresse, String email, String telephone) throws ServiceException {
+    public Membre create(Membre membre) throws ServiceException {
         try {
-            if (nom == null || prenom == null || nom.equals("") || prenom.equals(""))
+            if (membre.getNom() == null || membre.getPrenom() == null ||
+                    membre.getNom().equals("") || membre.getPrenom().equals(""))
                 throw new ServiceException("Le nom ou prenom du membre est vide");
-            return membreDao.create(nom.toUpperCase(), prenom, adresse, email, telephone);
+            return membreDao.create(membre);
         } catch (DaoException e) {
             e.printStackTrace();
             throw new ServiceException("Problème au service membre create");

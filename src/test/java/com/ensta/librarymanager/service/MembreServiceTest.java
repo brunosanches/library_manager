@@ -14,10 +14,11 @@ public class MembreServiceTest extends TestCase {
         String adresse = "1491 Mill Run Rd, Mill Run, PA 15464";
         String email = "lloyd.wright@gmail.com";
         String telephone = "+1 (444) 444-4444";
+        Membre membre = new Membre(-1, nom, prenom, adresse, email, telephone, Abonnement.BASIC);
 
         try {
             MembreService ms = MembreService.getInstance();
-            int id = ms.create(nom, prenom, adresse, email, telephone);
+            membre = ms.create(membre);
             assertTrue(false); // If it comes here it is wrong, need to throw exception
         } catch (ServiceException e) {
             assertEquals(e.getLocalizedMessage(), "Le nom ou prenom du membre est vide");
@@ -30,27 +31,27 @@ public class MembreServiceTest extends TestCase {
         String adresse = "1491 Mill Run Rd, Mill Run, PA 15464";
         String email = "lloyd.wright@gmail.com";
         String telephone = "+1 (444) 444-4444";
+        Membre membre = new Membre(-1, nom, prenom, adresse, email, telephone, Abonnement.BASIC);
 
         try {
             MembreService ms = MembreService.getInstance();
-            int id = ms.create(nom, prenom, adresse, email, telephone);
-            Membre m = ms.getById(id);
-            System.out.println(m);
+            membre = ms.create(membre);
+            System.out.println(membre);
 
-            m.setAbonnement(Abonnement.VIP);
-            ms.update(m);
-            m = ms.getById(id);
-            System.out.println(m);
+            membre.setAbonnement(Abonnement.VIP);
+            ms.update(membre);
+            membre = ms.getById(membre.getId());
+            System.out.println(membre);
 
-            assertEquals(nom.toUpperCase(), m.getNom());
-            assertEquals(prenom, m.getPrenom());
-            assertEquals(adresse, m.getAdresse());
-            assertEquals(email, m.getEmail());
-            assertEquals(telephone, m.getTelephone());
-            assertEquals(Abonnement.VIP, m.getAbonnement());
+            assertEquals(nom.toUpperCase(), membre.getNom());
+            assertEquals(prenom, membre.getPrenom());
+            assertEquals(adresse, membre.getAdresse());
+            assertEquals(email, membre.getEmail());
+            assertEquals(telephone, membre.getTelephone());
+            assertEquals(Abonnement.VIP, membre.getAbonnement());
 
-            m.setNom("");
-            ms.update(m);
+            membre.setNom("");
+            ms.update(membre);
             assertTrue(false); // If it comes here it is wrong, need to throw exception
 
         } catch (ServiceException e) {

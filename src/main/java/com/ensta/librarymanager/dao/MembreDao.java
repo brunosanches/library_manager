@@ -69,31 +69,32 @@ public class MembreDao implements IMembreDao {
     }
 
     @Override
-    public int create(String nom, String prenom, String adresse, String email, String telephone) throws DaoException {
+    public Membre create(Membre membre) throws DaoException {
         int id = -1;
         try (Connection conn = ConnectionManager.getConnection()){
 
             PreparedStatement pstm = conn.prepareStatement("INSERT INTO membre(nom, prenom, adresse, email, telephone, abonnement) " +
                                                                "VALUES (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
-            pstm.setString(1, nom);
-            pstm.setString(2, prenom);
-            pstm.setString(3, adresse);
-            pstm.setString(4, email);
-            pstm.setString(5, telephone);
-            pstm.setString(6, Abonnement.BASIC.name());
+            pstm.setString(1, membre.getNom());
+            pstm.setString(2, membre.getPrenom());
+            pstm.setString(3, membre.getAdresse());
+            pstm.setString(4, membre.getEmail());
+            pstm.setString(5, membre.getTelephone());
+            pstm.setString(6, membre.getAbonnement().name());
 
             pstm.executeUpdate();
             ResultSet resultSet = pstm.getGeneratedKeys();
 
             if (resultSet.next()) {
-                id = resultSet.getInt(1);
+                membre.setId(resultSet.getInt(1));
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DaoException("SQL Expection en create membre: " + e.getLocalizedMessage());
         }
-        return id;
+        return membre;
     }
 
     @Override
