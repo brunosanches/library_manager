@@ -7,12 +7,13 @@ import com.ensta.librarymanager.service.MembreService;
 import java.time.LocalDate;
 
 public class Emprunt {
-    // TODO Create class Emprunt
     private int id;
     private int idMembre;
     private int idLivre;
     private LocalDate dateEmprunt;
     private LocalDate dateRetour;
+    private Membre membre;
+    private Livre livre;
 
     public Emprunt(int id, int idMembre, int idLivre, LocalDate dateEmprunt, LocalDate dateRetour) {
         this.id = id;
@@ -46,49 +47,30 @@ public class Emprunt {
         this.dateRetour = dateRetour;
     }
 
-    public String getMembreNom() {
-        MembreService membreService = MembreService.getInstance();
-        try {
-            return membreService.getById(idMembre).getNom();
-        } catch (ServiceException e) {
-            e.printStackTrace();
+    public Membre getMembre() {
+        if (membre == null) {
+            MembreService membreService = MembreService.getInstance();
+            try {
+                membre = membreService.getById(idMembre);
+
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
         }
-        return "";
+        return membre;
     }
 
-    public String getMembrePrenom() {
-        MembreService membreService = MembreService.getInstance();
-
-        try {
-            return membreService.getById(idMembre).getPrenom();
-        } catch (ServiceException e) {
-            e.printStackTrace();
+    public Livre getLivre() {
+        if (livre == null) {
+            LivreService livreService = LivreService.getInstance();
+            try {
+                livre = livreService.getById(idLivre);
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
         }
-        return "";
+        return livre;
     }
-
-    public String getLivreTitre() {
-        LivreService livreService = LivreService.getInstance();
-
-        try {
-            return livreService.getById(idLivre).getTitre();
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
-    public String getAuteurNom() {
-        LivreService livreService = LivreService.getInstance();
-
-        try {
-            return livreService.getById(idLivre).getAuteur();
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
 
     @Override
     public String toString() {

@@ -1,7 +1,6 @@
 package com.ensta.librarymanager.model;
 
 public class Membre {
-    // TODO Create class Membre
     private int id;
     private String nom;
     private String prenom;
@@ -46,6 +45,22 @@ public class Membre {
         this.abonnement = abonnement;
     }
 
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
     public Membre(int id, String nom, String prenom, String adresse, String email, String telephone,
                   Abonnement abonnement) {
         this.id = id;
@@ -69,6 +84,7 @@ public class Membre {
                 ", abonnement=" + abonnement +
                 '}';
     }
+
 
 
 }

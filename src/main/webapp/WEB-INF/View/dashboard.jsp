@@ -72,8 +72,8 @@
                 <tbody id="results">
                     <c:forEach items="${empruntList}" var="emprunt">
                         <tr>
-                            <td>${emprunt.livreTitre}, ${emprunt.auteurNom}</td>
-                            <td>${emprunt.membrePrenom} ${emprunt.membreNom}</td>
+                            <td>${emprunt.livre.titre}, ${emprunt.livre.auteur}</td>
+                            <td>${emprunt.membre.prenom} ${emprunt.membre.nom}</td>
                             <td>${emprunt.dateEmprunt}</td>
                             <td><a href="emprunt_return?id=${emprunt.id}"><ion-icon class="table-item" name="log-in"></ion-icon></a></td>
                         </tr>
