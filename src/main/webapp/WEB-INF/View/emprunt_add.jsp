@@ -21,22 +21,24 @@
       </div>
       <div class="row">
       <div class="container">
-        <h5>S�lectionnez le livre et le membre emprunteur</h5>
+        <h5>Selectionnez le livre et le membre emprunteur</h5>
         <div class="row">
 	      <form action="/TP3Ensta/emprunt_add" method="post" class="col s12">
 	        <div class="row">
 	          <div class="input-field col s6">
 	            <select id="idLivre" name="idLivre" class="browser-default">
 	              <option value="" disabled selected>-- Livres --</option>
-	              <!-- TODO : parcourir la liste des livres disponibles et afficher autant d'options que n�cessaire, sur la base de l'exemple ci-dessous -->
-                  <option value="idDuLivre">"Titre du livre", de Nom de l'auteur</option>
+                    <c:forEach items="${livreList}" var="livre">
+                        <option value="${livre.id}">${livre.titre}, de ${livre.auteur}</option>
+                    </c:forEach>
 	            </select>
 	          </div>
 	          <div class="input-field col s6">
 	            <select id="idMembre" name="idMembre" class="browser-default">
 	              <option value="" disabled selected>-- Membres --</option>
-	              <!-- TODO : parcourir la liste des membres pouvant emprunter et afficher autant d'options que n�cessaire, sur la base de l'exemple ci-dessous -->
-                  <option value="idDuMembre">Pr�nom et nom du membre</option>
+                  <c:forEach items="${membreList}" var="membre">
+                      <option value="${membre.id}">${membre.nom} ${membre.prenom}</option>
+                  </c:forEach>
 	            </select>
 	          </div>
 	        </div>
@@ -51,5 +53,7 @@
     </section>
   </main>
   <jsp:include page='footer.jsp'></jsp:include>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

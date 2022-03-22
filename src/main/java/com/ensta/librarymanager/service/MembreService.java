@@ -4,6 +4,7 @@ import com.ensta.librarymanager.dao.MembreDao;
 import com.ensta.librarymanager.exception.DaoException;
 import com.ensta.librarymanager.exception.ServiceException;
 import com.ensta.librarymanager.model.Emprunt;
+import com.ensta.librarymanager.model.Livre;
 import com.ensta.librarymanager.model.Membre;
 
 import java.util.List;
@@ -33,7 +34,23 @@ public class MembreService implements IMembreService{
 
     @Override
     public List<Membre> getListMembreEmpruntPossible() throws ServiceException {
-        return null;
+        List<Membre> membreList;
+        try {
+            membreList = membreDao.getList();
+            EmpruntService empruntService = EmpruntService.getInstance();
+            membreList.stream().filter(item -> {
+                try {
+                    return empruntService.isEmpruntPossible(item);
+                } catch (ServiceException e) {
+                    e.printStackTrace();
+                }
+                return false;
+            });
+        } catch (DaoException e) {
+            throw new ServiceException("Exception en livre getListDispo en verifiant disponibilité" +
+                    e.getLocalizedMessage());
+        }
+        return membreList;
     }
 
     @Override
