@@ -38,8 +38,10 @@ public class MembreAddServlet extends HttpServlet {
 
         try {
             membre = membreService.create(membre);
+            response.sendRedirect("/TP3Ensta/membre_details?id=" + membre.getId());
         } catch (ServiceException e) {
             e.printStackTrace();
+            throw new ServletException(e.getMessage());
         }
 
         doGet(request, response);
