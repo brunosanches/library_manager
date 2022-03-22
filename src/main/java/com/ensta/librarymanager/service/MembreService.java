@@ -3,6 +3,7 @@ package com.ensta.librarymanager.service;
 import com.ensta.librarymanager.dao.MembreDao;
 import com.ensta.librarymanager.exception.DaoException;
 import com.ensta.librarymanager.exception.ServiceException;
+import com.ensta.librarymanager.model.Emprunt;
 import com.ensta.librarymanager.model.Membre;
 
 import java.util.List;
@@ -76,7 +77,15 @@ public class MembreService implements IMembreService{
     @Override
     public void delete(int id) throws ServiceException {
         try {
-            membreDao.delete(id);
+            EmpruntService empruntService = EmpruntService.getInstance();
+            List<Emprunt> empruntList = empruntService.getListCurrentByMembre(id);
+
+            if (empruntList.isEmpty()) {
+                membreDao.delete(id);
+            }
+            else {
+                throw new ServiceException("Le membre ne peut pas être deleté, il y a encore des emprunts");
+            }
         } catch (DaoException e) {
             e.printStackTrace();
             throw new ServiceException("Problème au service membre delete");
