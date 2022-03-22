@@ -2,7 +2,6 @@ package com.ensta.librarymanager.servlet;
 
 import com.ensta.librarymanager.exception.ServiceException;
 import com.ensta.librarymanager.model.Livre;
-import com.ensta.librarymanager.model.Membre;
 import com.ensta.librarymanager.service.LivreService;
 
 import javax.servlet.ServletException;

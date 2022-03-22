@@ -32,18 +32,23 @@
                     </tr>
                 </thead>
                 <tbody id="results">
-                
-                    <tr>
-                        <td>Titre du livre, <em>de Nom de l'auteur</em></td>
-                        <td>Prénom et nom du membre emprunteur</td>
-                        <td>Date de l'emprunt</td>
-                        <td>
-                            <a href="emprunt_return?id=idDeLEmprunt"><ion-icon class="table-item" name="log-in"></a>
-                        </td>
-                    </tr>
-
-					 <!-- TODO : parcourir la liste des emprunts en cours et les afficher selon la structure d'exemple ci-dessus -->
-					 <!-- TODO : dans le champ "retour", afficher la date de retour si elle existe, et un lien vers la page de retour si la date est vide (comme dans l'exemple ci-dessus) -->
+                    <c:forEach items="${empruntList}" var="emprunt">
+                        <tr>
+                            <td>${emprunt.livre.titre}, <em>de ${emprunt.livre.auteur}</em></td>
+                            <td>${emprunt.membre.prenom} ${emprunt.membre.prenom}</td>
+                            <td>${emprunt.dateEmprunt}</td>
+                            <c:choose>
+                                <c:when test="${not empty dateRetour}">
+                                    <td>${emprunt.dateRetour}</td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td>
+                                        <a href="emprunt_return?id=${emprunt.id}"><ion-icon class="table-item" name="log-in"></ion-icon></a>
+                                    </td>
+                                </c:otherwise>
+                            </c:choose>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
           </div>
@@ -52,5 +57,7 @@
     </section>
   </main>
   <jsp:include page='footer.jsp'></jsp:include>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
