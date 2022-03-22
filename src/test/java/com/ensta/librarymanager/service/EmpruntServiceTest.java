@@ -1,7 +1,9 @@
 package com.ensta.librarymanager.service;
 
 import com.ensta.librarymanager.exception.ServiceException;
+import com.ensta.librarymanager.model.Abonnement;
 import com.ensta.librarymanager.model.Emprunt;
+import com.ensta.librarymanager.model.Membre;
 import junit.framework.TestCase;
 
 import java.time.LocalDate;
@@ -65,15 +67,16 @@ public class EmpruntServiceTest extends TestCase {
         MembreService ms = MembreService.getInstance();
         LivreService ls = LivreService.getInstance();
         try {
-            int idMembre = ms.create("Macedo", "Bruno", "1 xxxxxxx", "xxxx@xxxx.com",
-                    "+77 77 77 77 77 77");
+            Membre membre = ms.create(new Membre(-1, "Macedo", "Bruno",
+                    "1 xxxxxxx", "xxxx@xxxx.com",
+                    "+77 77 77 77 77 77", Abonnement.BASIC));
 
             int idLivre1 = ls.create("History", "Jhon", "xxxxxxxxxx");
             int idLivre2 = ls.create("Geography", "Jhon", "xxxxxxxxxx");
-            es.create(idMembre, idLivre1, LocalDate.now());
-            assertTrue(es.isEmpruntPossible(ms.getById(idMembre)));
-            es.create(idMembre, idLivre2, LocalDate.now());
-            assertFalse(es.isEmpruntPossible(ms.getById(idMembre)));
+            es.create(membre.getId(), idLivre1, LocalDate.now());
+            assertTrue(es.isEmpruntPossible(ms.getById(membre.getId())));
+            es.create(membre.getId(), idLivre2, LocalDate.now());
+            assertFalse(es.isEmpruntPossible(ms.getById(membre.getId())));
         } catch (ServiceException e) {
             e.printStackTrace();
         }

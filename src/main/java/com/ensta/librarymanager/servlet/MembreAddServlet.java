@@ -1,6 +1,8 @@
 package com.ensta.librarymanager.servlet;
 
 import com.ensta.librarymanager.exception.ServiceException;
+import com.ensta.librarymanager.model.Abonnement;
+import com.ensta.librarymanager.model.Membre;
 import com.ensta.librarymanager.service.MembreService;
 
 import javax.servlet.ServletException;
@@ -26,14 +28,16 @@ public class MembreAddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String nom = request.getParameter("nom");
-        String prenom = request.getParameter("prenom");
-        String adresse = request.getParameter("adresse");
-        String email = request.getParameter("emila");
-        String telephone = request.getParameter("telephone");
+        Membre membre = new Membre(-1,
+                request.getParameter("nom"),
+                request.getParameter("prenom"),
+                request.getParameter("adresse"),
+                request.getParameter("email"),
+                request.getParameter("telephone"),
+                Abonnement.BASIC);
 
         try {
-            membreService.create(nom, prenom, adresse, email, telephone);
+            membre = membreService.create(membre);
         } catch (ServiceException e) {
             e.printStackTrace();
         }
