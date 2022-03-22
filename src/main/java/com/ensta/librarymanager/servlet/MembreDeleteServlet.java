@@ -45,7 +45,5 @@ public class MembreDeleteServlet extends HttpServlet {
 
             doGet(request, response);
         }
-
-
     }
 }
