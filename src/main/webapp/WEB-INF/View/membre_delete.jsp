@@ -29,12 +29,12 @@
             </c:if>
 
             <form action="/TP3Ensta/membre_delete" method="post" class="col s12">
-            <input type="hidden" value=${membre.id} name="id"> <!-- TODO : remplacer idDuMembre par l'id du membre -->
+            <input type="hidden" value=${membre.id} name="id">
 	        <div class="row center">
 	          <button class="btn waves-effect waves-light red" type="submit" name="action">Supprimer
 	            <i class="material-icons right">delete</i>
 	          </button>
-	          <a class="btn waves-effect waves-light orange" href="/TP3Ensta/membre_details?id=${membre.id}">Annuler</a> <!-- TODO : remplacer idDuMembre par l'id du membre -->
+	          <a class="btn waves-effect waves-light orange" href="/TP3Ensta/membre_details?id=${membre.id}">Annuler</a>
 	        </div>
 	      </form>
 	    </div>	    
