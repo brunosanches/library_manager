@@ -17,8 +17,8 @@ public class MembreServiceTest extends TestCase {
         Membre membre = new Membre(-1, nom, prenom, adresse, email, telephone, Abonnement.BASIC);
 
         try {
-            MembreService ms = MembreService.getInstance();
-            membre = ms.create(membre);
+            MembreService membreService = MembreService.getInstance();
+            membre = membreService.create(membre);
             assertTrue(false); // If it comes here it is wrong, need to throw exception
         } catch (ServiceException e) {
             assertEquals(e.getLocalizedMessage(), "Le nom ou prenom du membre est vide");
@@ -34,13 +34,13 @@ public class MembreServiceTest extends TestCase {
         Membre membre = new Membre(-1, nom, prenom, adresse, email, telephone, Abonnement.BASIC);
 
         try {
-            MembreService ms = MembreService.getInstance();
-            membre = ms.create(membre);
+            MembreService membreService = MembreService.getInstance();
+            membre = membreService.create(membre);
             System.out.println(membre);
 
             membre.setAbonnement(Abonnement.VIP);
-            ms.update(membre);
-            membre = ms.getById(membre.getId());
+            membreService.update(membre);
+            membre = membreService.getById(membre.getId());
             System.out.println(membre);
 
             assertEquals(nom.toUpperCase(), membre.getNom());
@@ -51,7 +51,7 @@ public class MembreServiceTest extends TestCase {
             assertEquals(Abonnement.VIP, membre.getAbonnement());
 
             membre.setNom("");
-            ms.update(membre);
+            membreService.update(membre);
             assertTrue(false); // If it comes here it is wrong, need to throw exception
 
         } catch (ServiceException e) {

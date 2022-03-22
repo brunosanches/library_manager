@@ -40,10 +40,7 @@ public class MembreDeleteServlet extends HttpServlet {
             response.sendRedirect("/TP3Ensta/membre_list");
         } catch (ServiceException e) {
             e.printStackTrace();
-            request.setAttribute("erreur", true);
-            request.setAttribute("message", e.getMessage());
-
-            doGet(request, response);
+            throw new ServletException(e.getMessage());
         }
     }
 }
