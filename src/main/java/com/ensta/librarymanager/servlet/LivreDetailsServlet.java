@@ -56,6 +56,7 @@ public class LivreDetailsServlet extends HttpServlet {
             livreService.update(livre);
         } catch (ServiceException e) {
             e.printStackTrace();
+            throw new ServletException(e.getMessage());
         }
 
         doGet(request, response);
