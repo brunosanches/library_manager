@@ -28,7 +28,7 @@ public class LivreService implements ILivreService {
             return livreDao.getList();
         } catch (DaoException e) {
             e.printStackTrace();
-            throw new ServiceException("Problème au service livre GetList");
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -59,7 +59,7 @@ public class LivreService implements ILivreService {
             return livreDao.getById(id);
         } catch (DaoException e) {
             e.printStackTrace();
-            throw new ServiceException("Problème au service livre GetById");
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -71,7 +71,7 @@ public class LivreService implements ILivreService {
             return livreDao.create(livre);
         } catch (DaoException e) {
             e.printStackTrace();
-            throw new ServiceException("Problème au service livre create");
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -83,17 +83,20 @@ public class LivreService implements ILivreService {
             livreDao.update(livre);
         } catch (DaoException e) {
             e.printStackTrace();
-            throw new ServiceException("Problème au service livre update");
+            throw new ServiceException(e.getMessage());
         }
     }
 
     @Override
     public void delete(int id) throws ServiceException {
         try {
-            livreDao.delete(id);
+            EmpruntService empruntService = EmpruntService.getInstance();
+            if (empruntService.getListCurrentByLivre(id).isEmpty())
+                livreDao.delete(id);
+            else throw new ServiceException("Vous ne pouvez pas deleter un livre qui n'as pas encore été retourné");
         } catch (DaoException e) {
             e.printStackTrace();
-            throw new ServiceException("Problème au service livre delete");
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -103,7 +106,7 @@ public class LivreService implements ILivreService {
             return livreDao.count();
         } catch (DaoException e) {
             e.printStackTrace();
-            throw new ServiceException("Problème au service livre count");
+            throw new ServiceException(e.getMessage());
         }
     }
 }
