@@ -24,10 +24,6 @@
       <h5>Suppression du membre n°${membre.id}</h5>
         <div class="row">
           <p>Êtes-vous sûr de vouloir supprimer la fiche de ${membre.prenom} ${membre.nom} ?</p>
-            <c:if test="${not empty erreur && erreur == true}">
-                <p style="color:red">${message}</p>
-            </c:if>
-
             <form action="/TP3Ensta/membre_delete" method="post" class="col s12">
             <input type="hidden" value=${membre.id} name="id">
 	        <div class="row center">
