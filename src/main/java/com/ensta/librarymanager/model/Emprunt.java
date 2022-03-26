@@ -12,8 +12,6 @@ public class Emprunt {
     private int idLivre;
     private LocalDate dateEmprunt;
     private LocalDate dateRetour;
-    private Membre membre;
-    private Livre livre;
 
     public Emprunt(int id, int idMembre, int idLivre, LocalDate dateEmprunt, LocalDate dateRetour) {
         this.id = id;
@@ -48,27 +46,27 @@ public class Emprunt {
     }
 
     public Membre getMembre() {
-        if (membre == null) {
-            MembreService membreService = MembreService.getInstance();
-            try {
-                membre = membreService.getById(idMembre);
+        MembreService membreService = MembreService.getInstance();
+        Membre membre =  null;
+        try {
+            membre = membreService.getById(idMembre);
 
-            } catch (ServiceException e) {
-                e.printStackTrace();
-            }
+        } catch (ServiceException e) {
+            e.printStackTrace();
         }
+
         return membre;
     }
 
     public Livre getLivre() {
-        if (livre == null) {
-            LivreService livreService = LivreService.getInstance();
-            try {
-                livre = livreService.getById(idLivre);
-            } catch (ServiceException e) {
-                e.printStackTrace();
-            }
+        LivreService livreService = LivreService.getInstance();
+        Livre livre = null;
+        try {
+            livre = livreService.getById(idLivre);
+        } catch (ServiceException e) {
+            e.printStackTrace();
         }
+
         return livre;
     }
 
