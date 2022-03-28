@@ -45,6 +45,7 @@ public class MembreDaoTest extends TestCase {
             assertEquals(adresse, membre.getAdresse());
             assertEquals(email, membre.getEmail());
             assertEquals(telephone, membre.getTelephone());
+            membreDao.delete(membre.getId());
         } catch (DaoException e) {
             e.printStackTrace();
         }
@@ -76,6 +77,7 @@ public class MembreDaoTest extends TestCase {
             assertEquals(email, membre.getEmail());
             assertEquals(telephone, membre.getTelephone());
             assertEquals(Abonnement.VIP, membre.getAbonnement());
+            membreDao.delete(membre.getId());
         } catch (DaoException e) {
             e.printStackTrace();
         }

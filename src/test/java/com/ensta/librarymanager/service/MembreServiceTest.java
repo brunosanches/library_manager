@@ -32,9 +32,10 @@ public class MembreServiceTest extends TestCase {
         String email = "lloyd.wright@gmail.com";
         String telephone = "+1 (444) 444-4444";
         Membre membre = new Membre(-1, nom, prenom, adresse, email, telephone, Abonnement.BASIC);
+        MembreService membreService = MembreService.getInstance();
 
         try {
-            MembreService membreService = MembreService.getInstance();
+
             membre = membreService.create(membre);
             System.out.println(membre);
 
@@ -56,6 +57,12 @@ public class MembreServiceTest extends TestCase {
 
         } catch (ServiceException e) {
             assertEquals(e.getLocalizedMessage(), "Le nom ou prenom du membre est vide");
+        }
+
+        try {
+            membreService.delete(membre.getId());
+        } catch (ServiceException e) {
+            e.printStackTrace();
         }
     }
 }

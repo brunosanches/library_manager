@@ -39,6 +39,7 @@ public class LivreDaoTest extends TestCase {
             assertEquals(titre, livre.getTitre());
             assertEquals(auteur, livre.getAuteur());
             assertEquals(isbn, livre.getIsbn());
+            livreDao.delete(livre.getId());
         } catch (DaoException e) {
             e.printStackTrace();
         }
@@ -66,6 +67,8 @@ public class LivreDaoTest extends TestCase {
             assertEquals(titre, livre.getTitre());
             assertEquals(auteur, livre.getAuteur());
             assertEquals(isbn, livre.getIsbn());
+
+            livreDao.delete(livre.getId());
         } catch (DaoException e) {
             e.printStackTrace();
         }

@@ -32,8 +32,9 @@ public class LivreServiceTest extends TestCase {
     @Test
     public void testUpdate() {
         LivreService livreService = LivreService.getInstance();
+        Livre livre = null;
         try {
-            Livre livre = new Livre(-1, "History", "Frank", "ssssss");
+            livre = new Livre(-1, "History", "Frank", "ssssss");
             livre = livreService.create(livre);
             assertTrue(livre.getId() != -1);
             livre.setTitre("");
@@ -41,6 +42,14 @@ public class LivreServiceTest extends TestCase {
             assertTrue(false); // If it comes here it is wrong, need to throw exception
         } catch (ServiceException e) {
             assertEquals(e.getLocalizedMessage(), "Le titre du livre est vide");
+
+        }
+        if (livre != null) {
+            try {
+                livreService.delete(livre.getId());
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
